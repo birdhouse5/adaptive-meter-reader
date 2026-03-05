@@ -51,7 +51,7 @@ See `docs/architecture.md` for full Mermaid diagrams.
 ## Setup
 
 ```bash
-git clone <repo-url>
+git clone git@github.com:birdhouse5/adaptive-meter-reader.git
 cd adaptive-meter-reader
 
 python3 -m venv .venv
