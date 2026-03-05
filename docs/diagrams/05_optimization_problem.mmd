@@ -1,0 +1,35 @@
+graph TD
+    subgraph Inputs["Input Variables — observed"]
+        direction TB
+        I1[Image Quality<br/><i>brightness, blur, angle,<br/>glare, occlusion</i>]
+        I2[Extraction Results<br/><i>open-ended: whatever the<br/>model found + confidence</i>]
+        I3[Device Context<br/><i>recognized type, number of<br/>similar confirmed images</i>]
+        I4[User Profile<br/><i>operator/tenant, history,<br/>success rate, error patterns</i>]
+        I5[Session State<br/><i>turn number, prior guidance,<br/>persisting issues</i>]
+        I6[Validation Signals<br/><i>confirmation history,<br/>consistency checks,<br/>calibrated confidence</i>]
+    end
+
+    subgraph Controls["Control Variables — Decision Agent decides"]
+        direction TB
+        C1[Sufficiency Judgment<br/><i>is this reading usable?<br/>learned, not hardcoded</i>]
+        C2[Issue Prioritization<br/><i>which problem first?<br/>based on effectiveness data</i>]
+        C3[Guidance Content<br/><i>device-specific tips from<br/>confirmed examples</i>]
+        C4[Escalation<br/><i>when to stop retrying</i>]
+    end
+
+    subgraph Objective["Objective"]
+        OBJ["minimize E[turns to success]<br/>subject to error_rate < epsilon"]
+    end
+
+    Inputs --> OBJ
+    Controls --> OBJ
+
+    subgraph Metrics["Measurable Outcomes"]
+        M1[Turns-to-success decreasing]
+        M2[First-attempt success rate increasing]
+        M3[Corrections per session decreasing]
+        M4[Knowledge base growing]
+        M5[Confidence calibration converging]
+    end
+
+    OBJ --> Metrics

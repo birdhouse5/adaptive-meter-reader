@@ -1,0 +1,33 @@
+graph TD
+    subgraph Tier1["Tier 1 — User Confirmation"]
+        direction TB
+        T1A[Operator confirms or corrects]
+        T1B["Confirmed image = labeled training data"]
+        T1C["Correction = model error signal"]
+    end
+
+    subgraph Tier2["Tier 2 — Cross-Session Consistency"]
+        direction TB
+        T2A[Device identifier stability<br/>Reading monotonicity<br/>Rate bound checks]
+        T2B[Physics violations = likely errors]
+        T2C[Free, automatic, every session]
+    end
+
+    subgraph Tier3["Tier 3 — Supervisor Verification"]
+        direction TB
+        T3A[Spot-check sample of readings]
+        T3B[High-confidence correction pairs]
+        T3C[Validates overall system accuracy]
+    end
+
+    subgraph Learning["All Feed Into Knowledge Base"]
+        direction TB
+        L1[Confidence calibration]
+        L2[Few-shot correction examples]
+        L3[Instruction effectiveness]
+        L4[Device type field expectations]
+    end
+
+    Tier1 --> Learning
+    Tier2 --> Learning
+    Tier3 --> Learning

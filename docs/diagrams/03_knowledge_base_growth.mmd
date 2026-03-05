@@ -1,0 +1,29 @@
+graph LR
+    subgraph Input["Every Confirmed Session Produces"]
+        direction TB
+        A[Labeled Image<br/><i>photo + confirmed device type</i>]
+        B[Field Structure<br/><i>what fields exist for this type</i>]
+        C[Ground Truth Values<br/><i>the confirmed reading</i>]
+        D[Extraction Quality<br/><i>model correct or wrong per field</i>]
+        E[Instruction Outcome<br/><i>did the guidance work?</i>]
+    end
+
+    subgraph KB["Knowledge Base"]
+        direction TB
+        KB1[Device Image Library<br/><i>few-shot prompting<br/>→ Vision Agent</i>]
+        KB2[Learned Field Schemas<br/><i>what to expect per type<br/>→ Decision Agent</i>]
+        KB3[Confidence Calibration<br/><i>model confidence → actual accuracy<br/>→ Decision Agent</i>]
+        KB4[Effective Instructions<br/><i>what works for what<br/>→ Decision Agent</i>]
+    end
+
+    subgraph Benefits["Feeds Back Into"]
+        direction TB
+        R1[Better device recognition]
+        R2[Better extraction accuracy]
+        R3[Better accept/reject decisions]
+        R4[Better guidance]
+    end
+
+    Input --> KB
+    KB --> Benefits
+    Benefits -->|more confirmed readings| Input

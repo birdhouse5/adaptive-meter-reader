@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+openai
+streamlit
+chromadb
+pydantic
+pydantic-settings
+python-dotenv
+Pillow
+python-multipart

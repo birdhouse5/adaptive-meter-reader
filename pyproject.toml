@@ -1,0 +1,5 @@
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+markers = [
+    "live: tests that require a real OpenAI API key (excluded from CI)",
+]

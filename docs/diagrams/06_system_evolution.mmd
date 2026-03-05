@@ -1,0 +1,20 @@
+graph LR
+    subgraph Week1["Week 1: Cold Start<br/>~0 confirmed readings"]
+        W1A["Vision Agent: base prompt only<br/>Decision Agent: conservative defaults<br/>Generic guidance<br/>No few-shot examples"]
+    end
+
+    subgraph Week4["Week 4: Learning<br/>~200 confirmed readings"]
+        W2A["Vision Agent: few-shot enriched on retries<br/>Decision Agent: device expectations emerging<br/>Instructions adapting to situations<br/>Confidence calibrating"]
+    end
+
+    subgraph Week8["Week 8: Mature<br/>~500 confirmed readings"]
+        W3A["Vision Agent: rich few-shot library<br/>Decision Agent: per-type playbooks<br/>Proven guidance with effectiveness data<br/>Calibrated confidence"]
+    end
+
+    subgraph Phase2["Phase 2: Tenant Extension"]
+        P2A["All knowledge transfers<br/>Tenants start with<br/>mature system<br/>Operator visit rate tracked"]
+    end
+
+    Week1 -->|"patterns emerge"| Week4
+    Week4 -->|"per-type playbooks"| Week8
+    Week8 -->|"knowledge base ready"| Phase2

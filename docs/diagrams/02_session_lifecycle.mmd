@@ -1,0 +1,36 @@
+sequenceDiagram
+    participant U as Operator
+    participant O as Orchestrator
+    participant V as Vision Agent (VLM)
+    participant D as Decision Agent (text)
+    participant KB as Knowledge Base
+
+    U->>O: Upload photo (turn 1)
+    O->>V: Analyze image (base prompt)
+    V->>V: Extract all identifiable data<br/>(open-ended, no prescribed fields)
+    V->>O: Extraction result + confidences + quality scores
+
+    O->>D: Evaluate extraction
+    D->>KB: Device expectations?<br/>Consistency signals?<br/>What worked for similar situations?
+    KB-->>D: Based on 47 confirmed readings:<br/>expect identifier + display value<br/>"Tilt phone down" resolved this 82% of the time
+    D->>D: Judge sufficiency + generate response
+    D->>O: Insufficient — display value unclear<br/>+ guidance for operator
+
+    O->>U: "The display value is unclear.<br/>Tilt your phone down — the serial<br/>is usually on the bottom label."
+
+    U->>O: Upload photo (turn 2)
+    O->>V: Analyze image (enriched prompt)
+    V->>KB: Retrieve similar confirmed images + error warnings
+    KB-->>V: 3 similar devices, known digit confusion 1↔0
+    V->>V: Extract with few-shot examples
+    V->>O: All fields high confidence
+
+    O->>D: Evaluate extraction
+    D->>O: Sufficient — present for confirmation
+
+    O->>U: "We read serial A7839201, value 04521. Correct?"
+    U->>O: Confirmed ✓
+
+    O->>KB: Store confirmed reading +<br/>labeled image + instruction outcome
+
+    Note over KB: This confirmed session<br/>enriches future interactions:<br/>+1 labeled image<br/>+1 instruction effectiveness signal<br/>+1 device history entry

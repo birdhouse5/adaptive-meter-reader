@@ -1,0 +1,24 @@
+graph TB
+    subgraph Turn["One Turn"]
+        direction TB
+
+        subgraph Call1["Call 1: Vision Agent — GPT-4.1 (VLM)"]
+            direction TB
+            V_IN[Image + Base Prompt]
+            V_KB["Knowledge Base enrichment<br/>(on retries only):<br/>• Similar confirmed images<br/>• Error pattern warnings"]
+            V_OUT["Output:<br/>• Open-ended extraction<br/>• Per-field confidences<br/>• Image quality scores"]
+        end
+
+        subgraph Call2["Call 2: Decision Agent — GPT-4.1-mini (text-only)"]
+            direction TB
+            D_IN["Input: extraction result<br/>(not the image)"]
+            D_KB["Knowledge Base enrichment<br/>(every turn):<br/>• Device expectations<br/>• Proven instructions<br/>• Consistency signals<br/>• Calibration data<br/>• Turn history"]
+            D_OUT["Output:<br/>• Routing: sufficient / retry / escalate<br/>• Operator-facing message<br/>(confirmation or guidance)"]
+        end
+    end
+
+    V_IN --> V_OUT
+    V_KB -.-> V_OUT
+    V_OUT --> D_IN
+    D_KB -.-> D_OUT
+    D_IN --> D_OUT

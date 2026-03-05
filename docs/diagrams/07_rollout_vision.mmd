@@ -1,0 +1,26 @@
+graph TB
+    subgraph Phase1["Phase 1: Operator Tool"]
+        direction TB
+        P1A[Operators use system<br/>during on-site visits]
+        P1B[System discovers device types<br/>from confirmed readings]
+        P1C[Builds knowledge base<br/>organically from usage]
+    end
+
+    subgraph Knowledge["Knowledge Base — emergent, not pre-configured"]
+        direction TB
+        K1[Device image library<br/>labeled by type]
+        K2[Field schemas per type<br/>discovered, not prescribed]
+        K3[Effective instruction templates<br/>proven by outcomes]
+        K4[Confidence calibration<br/>model accuracy per type]
+        K5[Device reading history<br/>for consistency checks]
+    end
+
+    subgraph Phase2["Phase 2: Tenant Self-Service"]
+        direction TB
+        P2A["Tenants get a choice:<br/>Self-service (AI-guided)<br/>or schedule operator visit"]
+        P2B[Starts with mature system<br/>not cold start]
+        P2C[Reduces operator visits<br/>= cost savings]
+    end
+
+    Phase1 --> Knowledge
+    Knowledge --> Phase2

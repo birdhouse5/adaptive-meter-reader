@@ -1,0 +1,57 @@
+graph TB
+    subgraph User["Operator / Tenant"]
+        PHONE[Phone / Upload]
+    end
+
+    subgraph System["Adaptive Meter Reader"]
+        direction TB
+        ORCH[Orchestrator<br/><i>Session Manager</i>]
+
+        subgraph Agents["Two-Agent Pipeline"]
+            direction LR
+            VIS[Vision Agent<br/><i>GPT-4.1 VLM</i><br/><i>open-ended extraction</i>]
+            DEC[Decision Agent<br/><i>GPT-4.1-mini</i><br/><i>sufficiency + routing + guidance</i>]
+        end
+
+        subgraph Validation["Ground Truth"]
+            direction LR
+            CONFIRM[User Confirmation<br/><i>Confirm or correct</i>]
+            CONSIST[Consistency Check<br/><i>Device history</i>]
+        end
+
+        subgraph Knowledge["Knowledge Base — grows from usage"]
+            direction LR
+            IMAGES[(Confirmed Images<br/><i>labeled by device type</i>)]
+            PATTERNS[(Interaction Patterns<br/><i>what guidance works</i>)]
+            CORRECTIONS[(Correction Patterns<br/><i>known model errors</i>)]
+        end
+
+        subgraph Data["Data Layer"]
+            direction LR
+            SQL[(SQLite<br/><i>Sessions, readings,<br/>device history</i>)]
+        end
+    end
+
+    subgraph Dashboard["Streamlit Dashboard"]
+        LIVE[Live Sessions]
+        STATS[Metrics + Knowledge Growth]
+        UPLOAD[Upload and Test]
+    end
+
+    PHONE -->|image upload| ORCH
+    ORCH --> VIS
+    VIS -->|extraction + quality| DEC
+    DEC -->|retry + guidance| PHONE
+    DEC -->|sufficient| CONFIRM
+    CONFIRM -->|confirmed / corrected| SQL
+
+    IMAGES -.->|few-shot examples| VIS
+    CORRECTIONS -.->|known errors| VIS
+    PATTERNS -.->|effective guidance| DEC
+    CONSIST -.->|consistency signals| DEC
+    SQL -.->|confirmed sessions| IMAGES
+    SQL -.->|confirmed sessions| PATTERNS
+    SQL -.->|corrections| CORRECTIONS
+    SQL -.->|device history| CONSIST
+
+    SQL --> Dashboard
