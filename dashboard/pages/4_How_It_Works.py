@@ -65,7 +65,9 @@ st.code(
 }""",
     language="json",
 )
-st.caption("No KB context on the first turn. The Vision Agent works from general knowledge only.")
+st.caption(
+    "No KB context on the first turn. The Vision Agent works from general knowledge only."
+)
 
 st.markdown("**Step 3** — Decision Agent receives the extraction (never the image):")
 st.code(
@@ -87,9 +89,7 @@ st.caption(
 st.markdown("---")
 st.markdown("#### Turn 2: Retry (with KB context)")
 
-st.markdown(
-    "**Step 1** — Operator uses flashlight and retakes the photo."
-)
+st.markdown("**Step 1** — Operator uses flashlight and retakes the photo.")
 
 st.markdown(
     "**Step 2** — Vision Agent extracts again, "

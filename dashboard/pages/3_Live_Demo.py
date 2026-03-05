@@ -47,7 +47,9 @@ if st.session_state.turn_history:
 
                 # Image quality badge
                 iq = result.get("image_quality", {})
-                usability = iq.get("overall_usability", 0) if isinstance(iq, dict) else 0
+                usability = (
+                    iq.get("overall_usability", 0) if isinstance(iq, dict) else 0
+                )
                 if usability >= 0.7:
                     badge = ":green[Good]"
                 elif usability >= 0.4:
@@ -172,9 +174,7 @@ if st.session_state.turn_history:
             if isinstance(field_data, dict):
                 val = field_data.get("value", "?")
                 conf = field_data.get("confidence", 0)
-                color = (
-                    "green" if conf >= 0.8 else "orange" if conf >= 0.5 else "red"
-                )
+                color = "green" if conf >= 0.8 else "orange" if conf >= 0.5 else "red"
                 st.markdown(
                     f"&nbsp;&nbsp;**{field_name}**: {val} "
                     f"<span style='color:{color}'>({conf:.0%})</span>",

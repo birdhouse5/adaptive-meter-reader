@@ -37,22 +37,21 @@ st.divider()
 
 # Turns-to-success trend (the key chart)
 st.subheader("Turns-to-Success Over Time")
-st.markdown("The core metric: as the knowledge base grows, readings take fewer attempts.")
+st.markdown(
+    "The core metric: as the knowledge base grows, readings take fewer attempts."
+)
 
 sessions_all = api_get("/sessions?limit=500")
 
 if sessions_all:
     completed = [
-        s for s in sessions_all
-        if s["status"] == "completed" and s["total_turns"] > 0
+        s for s in sessions_all if s["status"] == "completed" and s["total_turns"] > 0
     ]
     if len(completed) > 1:
         completed.sort(key=lambda x: x["id"])
         df = pd.DataFrame(completed)
         df["rolling_avg"] = (
-            df["total_turns"]
-            .rolling(window=min(10, len(df)), min_periods=1)
-            .mean()
+            df["total_turns"].rolling(window=min(10, len(df)), min_periods=1).mean()
         )
         st.line_chart(df.set_index("id")["rolling_avg"])
     else:
@@ -77,8 +76,10 @@ effectiveness = stats.get("instruction_effectiveness", [])
 if effectiveness:
     df_eff = pd.DataFrame(effectiveness)
     display_cols = [
-        "situation_signature", "instruction_text",
-        "times_used", "effectiveness_rate",
+        "situation_signature",
+        "instruction_text",
+        "times_used",
+        "effectiveness_rate",
     ]
     existing_cols = [c for c in display_cols if c in df_eff.columns]
     st.dataframe(df_eff[existing_cols], use_container_width=True, hide_index=True)

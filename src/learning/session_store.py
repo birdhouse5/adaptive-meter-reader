@@ -85,9 +85,7 @@ class SessionProcessor:
                 turns_to_success=turns_remaining,
                 device_type=device_type,
                 primary_issue=primary_issue,
-                effectiveness_rate=1.0
-                if total_turns > turn_num
-                else 0.0,
+                effectiveness_rate=1.0 if total_turns > turn_num else 0.0,
             )
 
             # Update instruction effectiveness in SQLite
